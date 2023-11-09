@@ -1,7 +1,18 @@
 {
-	"name": "@joyofcode/motion",
+	"name": "@animotion/motion",
 	"version": "0.0.1",
 	"type": "module",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/animotionjs/motion.git"
+	},
+	"keywords": [
+		"svelte",
+		"sveltekit",
+		"animation",
+		"library"
+	],
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
