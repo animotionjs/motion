@@ -4,7 +4,7 @@ https://github.com/animotionjs/motion/assets/38083522/7cd87b1b-016f-46d3-b2c9-67
 
 ## What Is Motion?
 
-Motion is a simple Svelte animation library. Instead of being limited to animating CSS properties using a JavaScript animation library, or the [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API), it uses values over time to animate any property.
+Motion is a simple Svelte animation library. Instead of being limited to animating CSS properties using a JavaScript animation library, or the [Web Animations API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API), it uses values that change over time, to animate any property.
 
 ## Installation
 
