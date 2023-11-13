@@ -5,25 +5,26 @@ import type { AnimationFn, Resolve } from './types.js'
 
 export function signal<TweenValues>(
 	values: TweenValues,
-	options: TweenedOptions<TweenValues> = {
+	options: TweenedOptions<TweenValues> = {}
+) {
+	const { subscribe, update, set } = tweened<TweenValues>(values, {
 		duration: 1000,
 		easing: cubicInOut,
 		interpolate,
-	}
-) {
-	const { subscribe, update, set } = tweened<TweenValues>(values, options)
+		...options,
+	})
 
 	let tasks: AnimationFn[] = []
 
 	function to(
 		this: any,
 		values: Partial<TweenValues>,
-		options: TweenedOptions<TweenValues> | undefined = undefined
+		toOptions: TweenedOptions<TweenValues> = {}
 	) {
 		if (typeof values === 'object') {
-			tasks.push(() => update((prev) => ({ ...prev, ...values }), options))
+			tasks.push(() => update((prev) => ({ ...prev, ...values }), toOptions))
 		} else {
-			tasks.push(() => set(values, options))
+			tasks.push(() => set(values, toOptions))
 		}
 		return this
 	}
@@ -33,7 +34,11 @@ export function signal<TweenValues>(
 		audio.volume = volume
 
 		tasks.push(async () => {
-			audio.play().catch(() => console.error('To play sounds interact with the page first.'))
+			audio
+				.play()
+				.catch(() =>
+					console.error('To play sounds interact with the page first.')
+				)
 		})
 
 		return this
