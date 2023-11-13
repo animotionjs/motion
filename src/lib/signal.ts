@@ -29,6 +29,11 @@ export function signal<TweenValues>(
 		return this
 	}
 
+	function reset() {
+		set(values, { duration: 0 })
+		tasks = []
+	}
+
 	function sfx(this: any, sound: string, { volume = 0.5 } = {}) {
 		const audio = new Audio(sound)
 		audio.volume = volume
@@ -52,5 +57,5 @@ export function signal<TweenValues>(
 		tasks = []
 	}
 
-	return { subscribe, to, sfx, then }
+	return { subscribe, to, reset, sfx, then }
 }
