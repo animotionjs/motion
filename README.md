@@ -55,18 +55,18 @@ To start an animation use the `await` keyword. You can use the `to` method to ch
 </script>
 
 <svg viewBox="{$svg.x} {$svg.y} {$svg.w} {$svg.h}">
-	<circle cx={$circle.x} cy={$circle.y} r={$circle.r} fill={$circle.fill} />
+  <circle cx={$circle.x} cy={$circle.y} r={$circle.r} fill={$circle.fill} />
 
-	<text
-		x={$circle.x}
-		y={$circle.y}
-		font-size={$circle.r * 0.4}
-		opacity={$text.opacity}
-		text-anchor="middle"
-		dominant-baseline="middle"
-		fill="#000"
-	>
-		{formatNumber($text.count)}
-	</text>
+  <text
+    x={$circle.x}
+    y={$circle.y}
+    font-size={$circle.r * 0.4}
+    opacity={$text.opacity}
+    text-anchor="middle"
+    dominant-baseline="middle"
+    fill="#000"
+  >
+    {formatNumber($text.count)}
+  </text>
 </svg>
 ```
