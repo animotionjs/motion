@@ -27,31 +27,31 @@ To start an animation use the `await` keyword. You can use the `to` method to ch
 
 ```svelte
 <script lang="ts">
-	import { animate, signal, all } from '@animotion/motion'
-	import { formatNumber } from '$lib/utils'
+  import { animate, signal, all } from '@animotion/motion'
+  import { formatNumber } from '$lib/utils'
 
-	const sfx = {
-		transition: 'sfx/transition.mp3',
-		tally: 'sfx/tally.mp3',
-	}
+  const sfx = {
+    transition: 'sfx/transition.mp3',
+    tally: 'sfx/tally.mp3',
+  }
 
-	const svg = signal({ x: -2, y: -2, w: 24, h: 24 })
-	const circle = signal({ x: 2.5, y: 2.5, r: 1.5, fill: '#00ffff' })
-	const text = signal({ count: 0, opacity: 0 })
+  const svg = signal({ x: -2, y: -2, w: 24, h: 24 })
+  const circle = signal({ x: 2.5, y: 2.5, r: 1.5, fill: '#00ffff' })
+  const text = signal({ count: 0, opacity: 0 })
 
-	animate(async () => {
-		await svg.sfx(sfx.transition).to({ x: 0, y: 0, w: 10, h: 10 })
+  animate(async () => {
+    await svg.sfx(sfx.transition).to({ x: 0, y: 0, w: 10, h: 10 })
 
-		all(
-			circle.sfx(sfx.transition).to({ x: 10, y: 10, r: 3, fill: '#ffff00' }),
-			svg.to({ x: 5, y: 5 })
-		)
+    all(
+      circle.sfx(sfx.transition).to({ x: 10, y: 10, r: 3, fill: '#ffff00' }),
+      svg.to({ x: 5, y: 5 })
+    )
 
-		await text
-			.to({ opacity: 1 }, { duration: 300 })
-			.sfx(sfx.tally)
-			.to({ count: 10_000 }, { duration: 600 })
-	})
+    await text
+      .to({ opacity: 1 }, { duration: 300 })
+      .sfx(sfx.tally)
+      .to({ count: 10_000 }, { duration: 600 })
+  })
 </script>
 
 <svg viewBox="{$svg.x} {$svg.y} {$svg.w} {$svg.h}">
