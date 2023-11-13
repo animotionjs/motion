@@ -12,18 +12,25 @@ Motion is a simple Svelte animation library. Instead of being limited to animati
 npm i @animotion/motion
 ```
 
-## Usage
-
-[![Open in SvelteLab](https://docs.sveltelab.dev/button/light_wide.svg)](https://www.sveltelab.dev/wqfco73sn2l75gv)
-
-`motion` has three imports:
+## Methods
 
 - `animate` is an `onMount` wrapper, but you can use any `async` function to define the animation
 - `signal` is the value over time which can be a single value, such as `signal(0)`, or an object `signal({ count: 0 })`
 - `all` is a helper function used to play animations at the same time (you can use `await` in front of it)
 - `reset` is a helper function to reset the animation to its default values
 
-To start an animation use the `await` keyword. You can use the `to` method to chain animations together, and the `sfx` method to play sounds alongside animations.
+## Usage
+
+- To start an animation use the `await` keyword
+- Use `to` on a signal to animate values, and `sfx` to play sounds
+- `to` and `sfx` are chainable
+- `signal` and `to` accept an options object for `duration`, `delay`, and `easing` 
+
+## Example
+
+[![Open in SvelteLab](https://docs.sveltelab.dev/button/dark_wide.svg)](https://www.sveltelab.dev/wqfco73sn2l75gv)
+
+You can [try the example in SvelteLab](https://www.sveltelab.dev/wqfco73sn2l75gv).
 
 ```svelte
 <script lang="ts">
