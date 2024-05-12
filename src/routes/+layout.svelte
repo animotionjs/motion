@@ -1,9 +1,11 @@
 <script lang="ts">
 	import '../app.css'
+
+	let { children } = $props()
 </script>
 
 <svelte:head>
-	<title>Motion SVG</title>
+	<title>Motion</title>
 </svelte:head>
 
-<slot />
+{@render children()}
