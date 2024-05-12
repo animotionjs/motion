@@ -3,8 +3,8 @@
 	import { formatNumber } from './utils.js'
 
 	const sfx = {
-		transition: 'sfx/transition.mp3',
-		tally: 'sfx/tally.mp3',
+		transition: 'sfx/transition',
+		tally: 'sfx/tally',
 	}
 
 	const svg = signal({ x: -2, y: -2, w: 24, h: 24 })

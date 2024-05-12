@@ -8,3 +8,7 @@ export function animate(fn: AnimationFn) {
 export function all(...animations: AnimationFn[]) {
 	return Promise.all(animations)
 }
+
+export function wait(ms: number) {
+	return new Promise((resolve) => setTimeout(resolve, ms))
+}

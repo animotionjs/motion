@@ -3,15 +3,19 @@ import { cubicInOut } from 'svelte/easing'
 import { interpolate } from 'd3-interpolate'
 import type { AnimationFn, Resolve } from './types.js'
 
+function time(seconds: number) {
+	return seconds * 1000
+}
+
 export function signal<TweenValues>(
 	values: TweenValues,
 	options: TweenedOptions<TweenValues> = {}
 ) {
 	const { subscribe, update, set } = tweened<TweenValues>(values, {
-		duration: 1000,
 		easing: cubicInOut,
 		interpolate,
 		...options,
+		duration: time(options.duration as number) || time(1),
 	})
 
 	let tasks: AnimationFn[] = []
@@ -35,7 +39,7 @@ export function signal<TweenValues>(
 	}
 
 	function sfx(this: any, sound: string, { volume = 0.5 } = {}) {
-		const audio = new Audio(sound)
+		const audio = new Audio(`${sound}.mp3`)
 		audio.volume = volume
 
 		tasks.push(async () => {
