@@ -1,11 +1,15 @@
 {
 	"name": "@animotion/motion",
-	"version": "0.0.4",
+	"version": "0.0.5",
+	"description": "Svelte animation library",
+	"author": "animotionjs",
+	"homepage": "https://animotion.pages.dev",
+	"bugs": "https://github.com/animotionjs/motion/issues",
 	"type": "module",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/animotionjs/motion.git"
+		"url": "git+https://github.com/animotionjs/motion.git"
 	},
 	"keywords": [
 		"svelte",
@@ -37,7 +41,7 @@
 		"!dist/**/*.spec.*"
 	],
 	"peerDependencies": {
-		"svelte": "^4.0.0"
+		"svelte": "^5.0.0"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.2.0",
