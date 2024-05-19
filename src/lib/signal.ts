@@ -16,6 +16,7 @@ export function signal<TweenValues>(
 		interpolate,
 		...options,
 		duration: time(options.duration as number) || time(1),
+		delay: time(options.delay || 0),
 	})
 
 	let tasks: AnimationFn[] = []
@@ -23,12 +24,18 @@ export function signal<TweenValues>(
 	function to(
 		this: any,
 		values: Partial<TweenValues>,
-		toOptions: TweenedOptions<TweenValues> = {}
+		options: TweenedOptions<TweenValues> = {}
 	) {
+		const opts = {
+			...options,
+			duration: time(options.duration as number) || time(1),
+			delay: time(options.delay || 0),
+		}
+
 		if (typeof values === 'object') {
-			tasks.push(() => update((prev) => ({ ...prev, ...values }), toOptions))
+			tasks.push(() => update((prev) => ({ ...prev, ...values }), opts))
 		} else {
-			tasks.push(() => set(values, toOptions))
+			tasks.push(() => set(values, opts))
 		}
 		return this
 	}

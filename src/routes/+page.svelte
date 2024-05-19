@@ -20,9 +20,9 @@
 		)
 
 		await text
-			.to({ opacity: 1 }, { duration: 300 })
+			.to({ opacity: 1 }, { duration: 0.3 })
 			.sfx(sfx.tally)
-			.to({ count: 10_000 }, { duration: 600 })
+			.to({ count: 10_000 }, { duration: 0.6 })
 	})
 </script>
 
