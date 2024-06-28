@@ -1,4 +1,4 @@
-import { signal } from './signal.js'
+import { tween } from './tween.js'
 import { animate, all, wait } from './utils.js'
 
-export { signal, animate, all, wait }
+export { tween, animate, all, wait }

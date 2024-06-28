@@ -3,39 +3,28 @@ import { cubicInOut } from 'svelte/easing'
 import { interpolate } from 'd3-interpolate'
 import type { AnimationFn, Resolve } from './types.js'
 
-function time(seconds: number) {
-	return seconds * 1000
-}
+let tasks: AnimationFn[] = []
 
-export function signal<TweenValues>(
+export function tween<TweenValues>(
 	values: TweenValues,
 	options: TweenedOptions<TweenValues> = {}
 ) {
 	const { subscribe, update, set } = tweened<TweenValues>(values, {
+		duration: 1000,
 		easing: cubicInOut,
 		interpolate,
 		...options,
-		duration: time(options.duration as number) || time(1),
-		delay: time(options.delay || 0),
 	})
-
-	let tasks: AnimationFn[] = []
 
 	function to(
 		this: any,
 		values: Partial<TweenValues>,
-		options: TweenedOptions<TweenValues> = {}
+		toOptions: TweenedOptions<TweenValues> = {}
 	) {
-		const opts = {
-			...options,
-			duration: time(options.duration as number) || time(1),
-			delay: time(options.delay || 0),
-		}
-
 		if (typeof values === 'object') {
-			tasks.push(() => update((prev) => ({ ...prev, ...values }), opts))
+			tasks.push(() => update((prev) => ({ ...prev, ...values }), toOptions))
 		} else {
-			tasks.push(() => set(values, opts))
+			tasks.push(() => set(values, toOptions))
 		}
 		return this
 	}
