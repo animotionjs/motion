@@ -3,12 +3,12 @@ import { cubicInOut } from 'svelte/easing'
 import { interpolate } from 'd3-interpolate'
 import type { AnimationFn, Resolve } from './types.js'
 
-let tasks: AnimationFn[] = []
-
 export function tween<TweenValues>(
 	values: TweenValues,
 	options: TweenedOptions<TweenValues> = {}
 ) {
+	let tasks: AnimationFn[] = []
+
 	const { subscribe, update, set } = tweened<TweenValues>(values, {
 		duration: 1000,
 		easing: cubicInOut,
@@ -49,6 +49,7 @@ export function tween<TweenValues>(
 		return this
 	}
 
+	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#thenables
 	async function then(resolve: Resolve) {
 		for (const task of tasks) {
 			await task()
