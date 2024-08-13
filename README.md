@@ -26,13 +26,9 @@ npm i @animotion/motion
 
 ## Example
 
-[![Open in SvelteLab](https://docs.sveltelab.dev/button/dark_wide.svg)](https://www.sveltelab.dev/wqfco73sn2l75gv)
-
-You can [try the example in SvelteLab](https://www.sveltelab.dev/wqfco73sn2l75gv).
-
 ```svelte
 <script>
-	import { tween } from '$@animotion/motion'
+	import { tween } from '@animotion/motion'
 
 	const sfx = {
 		transition: 'sfx/transition.mp3',
@@ -53,6 +49,8 @@ You can [try the example in SvelteLab](https://www.sveltelab.dev/wqfco73sn2l75gv
 </script>
 
 <svg viewBox="{svg.x} {svg.y} {svg.w} {svg.h}">
+	{@render grid()}
+
 	<circle cx={circle.x} cy={circle.y} r={circle.r} fill={circle.fill} />
 
 	<text
