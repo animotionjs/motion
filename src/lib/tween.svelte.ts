@@ -16,8 +16,14 @@ class Tween<T> {
 			interpolate,
 			...options,
 		})
-		this.#store.subscribe((v) => (this.value = v))
-		if (typeof value === 'object') this.setProperties(this.value)
+
+		$effect.pre(() => {
+			return this.#store.subscribe((v) => (this.value = v))
+		})
+
+		if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+			this.setProperties(this.value)
+		}
 	}
 
 	setProperties(value: T) {
@@ -31,10 +37,8 @@ class Tween<T> {
 	}
 
 	to(value: Partial<T>, options: Options<T> = {}) {
-		if (typeof value === 'object') {
-			return this.#store.update((prev) => {
-				return { ...prev, ...value }
-			}, options)
+		if (typeof value === 'object' && value !== null) {
+			return this.#store.update((prev) => ({ ...prev, ...value }), options)
 		}
 		return this.#store.set(value, options)
 	}
