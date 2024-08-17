@@ -35,20 +35,20 @@ npm i @animotion/motion
 		tally: 'sfx/tally.mp3',
 	}
 
-	const svg = tween({ x: -2, y: -2, w: 24, h: 24 })
+	const camera = tween({ x: -2, y: -2, w: 24, h: 24 })
 	const circle = tween({ x: 2.5, y: 2.5, r: 1.5, fill: '#00ffff' })
 	const text = tween({ count: 0, opacity: 0 })
 
 	async function animate() {
-		await svg.sfx(sfx.transition).to({ x: 0, y: 0, w: 10, h: 10 })
+		await camera.sfx(sfx.transition).to({ x: 0, y: 0, w: 10, h: 10 })
 		circle.sfx(sfx.transition).to({ x: 10, y: 10, r: 3, fill: '#ffff00' })
-		svg.to({ x: 5, y: 5 })
+		camera.to({ x: 5, y: 5 })
 		await text.to({ opacity: 1 }, { duration: 300 })
-		await text.sfx(sfx.tally).to({ count: 10_000 }, { duration: 600 })
+		text.sfx(sfx.tally).to({ count: 10_000 }, { duration: 600 })
 	}
 </script>
 
-<svg viewBox="{svg.x} {svg.y} {svg.w} {svg.h}">
+<svg viewBox="{camera.x} {camera.y} {camera.w} {camera.h}">
 	{@render grid()}
 
 	<circle cx={circle.x} cy={circle.y} r={circle.r} fill={circle.fill} />
