@@ -1,5 +1,7 @@
 import { interpolateLab } from 'd3-interpolate'
 
+type Object = Record<string, any>
+
 export function interpolate(a: any, b: any) {
 	if (a === b || a !== a) return () => a
 
@@ -25,13 +27,13 @@ export function interpolate(a: any, b: any) {
 
 		const keys = Object.keys(b)
 
-		const interpolators: Record<string, any> = {}
+		const interpolators: Object = {}
 		keys.forEach((key) => {
 			interpolators[key] = interpolate(a[key], b[key])
 		})
 
 		return (t: number) => {
-			const result: Record<string, any> = {}
+			const result: Object = {}
 			keys.forEach((key) => {
 				result[key] = interpolators[key](t)
 			})
