@@ -1,6 +1,6 @@
 {
 	"name": "@animotion/motion",
-	"version": "0.0.8",
+	"version": "0.0.9",
 	"description": "Svelte animation library",
 	"author": "animotionjs",
 	"homepage": "https://animotion.pages.dev",
