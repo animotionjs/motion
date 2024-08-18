@@ -3,6 +3,7 @@ import { cubicInOut } from 'svelte/easing'
 import { interpolate } from './interpolate.js'
 
 type Options<T> = Parameters<typeof tweened<T>>[1]
+type Tweened<T> = T extends object ? Tween<T> & T : Tween<T>
 
 class Tween<T> {
 	value = $state() as T
@@ -56,5 +57,5 @@ class Tween<T> {
 }
 
 export function tween<T>(value: T, options?: Options<T>) {
-	return new Tween<T>(value, options) as Tween<T> & T
+	return new Tween<T>(value, options) as Tweened<T>
 }
