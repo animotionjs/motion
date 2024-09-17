@@ -59,3 +59,7 @@ class Tween<T> {
 export function tween<T>(value: T, options?: Options<T>) {
 	return new Tween<T>(value, options) as Tweened<T>
 }
+
+export async function all(...tweens: Promise<void>[]) {
+	return Promise.all([...tweens])
+}
