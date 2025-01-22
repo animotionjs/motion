@@ -1,6 +1,6 @@
 {
 	"name": "@animotion/motion",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "Svelte animation library",
 	"author": "animotionjs",
 	"homepage": "https://animotion.pages.dev",
@@ -19,8 +19,9 @@
 	],
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
+		"build": "vite build && npm run prepack",
 		"preview": "vite preview",
+		"prepack": "svelte-kit sync && svelte-package && publint",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test": "vitest",
