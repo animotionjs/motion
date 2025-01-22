@@ -1,6 +1,6 @@
 {
 	"name": "@animotion/motion",
-	"version": "1.0.1",
+	"version": "2.0.0",
 	"description": "Svelte animation library",
 	"author": "animotionjs",
 	"homepage": "https://animotion.pages.dev",
@@ -19,15 +19,13 @@
 	],
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build && npm run package",
+		"build": "vite build",
 		"preview": "vite preview",
-		"package": "svelte-kit sync && svelte-package && publint",
-		"prepublishOnly": "npm run package",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test": "vitest",
-		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write ."
+		"lint": "eslint . && prettier --check .",
+		"format": "prettier --write ."
 	},
 	"exports": {
 		".": {
@@ -44,26 +42,29 @@
 		"svelte": "^5.0.0"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^3.2.3",
-		"@sveltejs/kit": "^2.5.21",
-		"@sveltejs/package": "^2.3.3",
-		"@sveltejs/vite-plugin-svelte": "^3.1.1",
+		"@sveltejs/adapter-auto": "^4.0.0",
+		"@sveltejs/kit": "^2.16.0",
+		"@sveltejs/package": "^2.3.7",
+		"@sveltejs/vite-plugin-svelte": "^5.0.3",
 		"@types/d3-interpolate": "^3.0.4",
-		"@typescript-eslint/eslint-plugin": "^8.0.1",
-		"@typescript-eslint/parser": "^8.0.1",
-		"eslint": "^9.9.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.43.0",
-		"jsdom": "^24.1.1",
-		"prettier": "^3.3.3",
-		"prettier-plugin-svelte": "^3.2.6",
-		"publint": "^0.2.9",
-		"svelte": "5.0.0-next.216",
-		"svelte-check": "^3.8.5",
-		"tslib": "^2.6.3",
-		"typescript": "^5.5.4",
-		"vite": "^5.4.0",
-		"vitest": "^2.0.5"
+		"@types/node": "^22.10.7",
+		"@typescript-eslint/eslint-plugin": "^8.20.0",
+		"@typescript-eslint/parser": "^8.20.0",
+		"@vitest/browser": "^3.0.2",
+		"eslint": "^9.18.0",
+		"eslint-config-prettier": "^10.0.1",
+		"eslint-plugin-svelte": "^2.46.1",
+		"playwright": "^1.49.1",
+		"prettier": "^3.4.2",
+		"prettier-plugin-svelte": "^3.3.3",
+		"publint": "^0.3.2",
+		"svelte": "5.19.0",
+		"svelte-check": "^4.1.4",
+		"tslib": "^2.8.1",
+		"typescript": "^5.7.3",
+		"vite": "^6.0.9",
+		"vitest": "^3.0.2",
+		"vitest-browser-svelte": "^0.1.0"
 	},
 	"dependencies": {
 		"d3-interpolate": "^3.0.1"

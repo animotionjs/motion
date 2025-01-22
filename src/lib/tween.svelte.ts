@@ -1,51 +1,63 @@
-import { tweened } from 'svelte/motion'
+import { Tween as SvelteTween } from 'svelte/motion'
 import { cubicInOut } from 'svelte/easing'
 import { interpolate } from './interpolate.js'
 
-type Options<T> = Parameters<typeof tweened<T>>[1]
-type Tweened<T> = T extends object ? Tween<T> & T : Tween<T>
+type TweenedOptions<T> = ConstructorParameters<typeof SvelteTween<T>>[1]
+
+function isObject<T>(value: T): value is T {
+	return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
 
 class Tween<T> {
-	value = $state() as T
-	#store
+	#tween: SvelteTween<T>
+	#default
 
-	constructor(value: T, options?: Options<T>) {
-		this.value = value
-		this.#store = tweened(value, {
+	/**
+	 * @deprecated use `.current` instead
+	 */
+	value = $state() as T
+
+	constructor(value: T, options?: TweenedOptions<T>) {
+		this.#tween = new SvelteTween(value, {
 			duration: 1000,
 			easing: cubicInOut,
 			interpolate,
 			...options,
 		})
+		this.#default = value
 
-		$effect.pre(() => {
-			return this.#store.subscribe((v) => (this.value = v))
-		})
-
-		if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-			this.setProperties(this.value)
+		// turns object properties into readonly accessors so instead of
+		// doing `obj.current.x` you can do `obj.x` to get the value
+		if (isObject(this.#tween.current)) {
+			this.#createReadonlyAccessors(this.#tween.current)
 		}
 	}
 
-	setProperties(value: T) {
+	#createReadonlyAccessors(value: T) {
 		for (const key in value) {
 			Object.defineProperty(this, key, {
 				get() {
-					return this.value[key]
+					return this.#tween.current[key]
 				},
 			})
 		}
 	}
 
-	to(value: Partial<T>, options: Options<T> = {}) {
-		if (typeof value === 'object' && value !== null) {
-			return this.#store.update((prev) => ({ ...prev, ...value }), options)
-		}
-		return this.#store.set(value, options)
+	get current() {
+		return this.#tween.current
+	}
+
+	to(
+		value: T extends object ? Partial<T> : T,
+		options: TweenedOptions<T> = {}
+	) {
+		return isObject(value)
+			? this.#tween.set({ ...this.#tween.current, ...value }, options)
+			: this.#tween.set(value, options)
 	}
 
 	reset() {
-		this.#store.set(this.value, { duration: 0 })
+		this.#tween.set(this.#default, { duration: 0 })
 	}
 
 	sfx(sound: string, { volume = 0.5 } = {}) {
@@ -56,8 +68,10 @@ class Tween<T> {
 	}
 }
 
-export function tween<T>(value: T, options?: Options<T>) {
-	return new Tween<T>(value, options) as Tweened<T>
+export function tween<T>(value: T, options?: TweenedOptions<T>) {
+	return new Tween<T>(value, options) as T extends object
+		? Tween<T> & T
+		: Tween<T>
 }
 
 export async function all(...tweens: Promise<void>[]) {
