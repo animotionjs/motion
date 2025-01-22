@@ -4,7 +4,10 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
 	plugins: [sveltekit()],
 	test: {
-		environment: 'jsdom',
-		include: ['src/**/*.{test,spec}.{js,ts}'],
+		browser: {
+			enabled: true,
+			name: 'chromium',
+			provider: 'playwright',
+		},
 	},
 })
