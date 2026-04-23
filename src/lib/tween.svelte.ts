@@ -19,6 +19,21 @@ class Tween<T> {
 		return this.#tween.current;
 	}
 
+	/** Get the current target value. */
+	get target() {
+		return this.#tween.current;
+	}
+
+	/**
+	 * Animate to a new value using assignment syntax.
+	 * @param v - The target value.
+	 * @example
+	 * count.target = 100;
+	 */
+	set target(v) {
+		this.#tween.set(v);
+	}
+
 	/**
 	 * Create a new tween.
 	 * @param value - The initial value to tween from.
