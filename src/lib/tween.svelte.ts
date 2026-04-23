@@ -14,6 +14,18 @@ class Tween<T> {
 	#tween: SvelteTween<T>;
 	#default: T;
 
+	/** Get the current animated value. */
+	get current() {
+		return this.#tween.current;
+	}
+
+	/**
+	 * Create a new tween.
+	 * @param value - The initial value to tween from.
+	 * @param options - Optional default duration, easing, and delay.
+	 * @example
+	 * const x = tween(0, { duration: 500 });
+	 */
 	constructor(value: T, options?: TweenedOptions<T>) {
 		this.#tween = new SvelteTween(value, {
 			duration: 1000,
@@ -38,10 +50,15 @@ class Tween<T> {
 		}
 	}
 
-	get current() {
-		return this.#tween.current;
-	}
-
+	/**
+	 * Animate the value to a new target.
+	 * @param value - The target value (or partial object for object tweens).
+	 * @param options - Optional duration, easing, and delay for this transition.
+	 * @returns A promise that resolves when the animation completes.
+	 * @example
+	 * await circle.to({ x: 100, y: 100 }, { duration: 500 });
+	 * await count.to(100);
+	 */
 	to(value: T extends object ? Partial<T> : T, options: TweenedOptions<T> = {}) {
 		if (isObject(value)) {
 			return this.#tween.set({ ...this.#tween.current, ...value }, options);
@@ -49,10 +66,23 @@ class Tween<T> {
 		return this.#tween.set(value as T, options);
 	}
 
+	/**
+	 * Reset the value instantly to its initial state.
+	 * @example
+	 * circle.reset();
+	 */
 	reset() {
 		this.#tween.set(this.#default, { duration: 0 });
 	}
 
+	/**
+	 * Play a sound effect.
+	 * @param sound - URL or path to the audio file.
+	 * @param options - Optional volume (default 0.5).
+	 * @returns The tween instance for chaining.
+	 * @example
+	 * circle.sfx('/sfx/pop.mp3').to({ r: 20 });
+	 */
 	sfx(sound: string, { volume = 0.5 } = {}) {
 		let audio = sfxCache.get(sound);
 		if (!audio) {
@@ -67,10 +97,27 @@ class Tween<T> {
 	}
 }
 
+/**
+ * Create a reactive tween.
+ * @param value - The initial value.
+ * @param options - Optional default duration, easing, and delay.
+ * @example
+ * const circle = tween({ x: 0, y: 0 });
+ * const count = tween(0, { duration: 300 });
+ */
 export function tween<T>(value: T, options?: TweenedOptions<T>) {
 	return new Tween<T>(value, options) as T extends object ? Tween<T> & T : Tween<T>;
 }
 
+/**
+ * Wait for multiple tweens to complete in parallel.
+ * @param tweens - Array of tween promises.
+ * @example
+ * await all(
+ *   circle.to({ x: 100 }),
+ *   text.to({ opacity: 1 })
+ * );
+ */
 export function all(...tweens: Promise<void>[]) {
 	return Promise.all(tweens);
 }
