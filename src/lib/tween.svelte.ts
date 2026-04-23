@@ -8,6 +8,8 @@ function isObject(value: unknown): value is Record<string, unknown> {
 	return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
+const sfxCache = new Map<string, HTMLAudioElement>();
+
 class Tween<T> {
 	#tween: SvelteTween<T>;
 	#default: T;
@@ -59,11 +61,15 @@ class Tween<T> {
 	}
 
 	sfx(sound: string, { volume = 0.5 } = {}) {
-		const audio = new Audio(sound);
+		let audio = sfxCache.get(sound);
+		if (!audio) {
+			audio = new Audio(sound);
+			sfxCache.set(sound, audio);
+		}
 		audio.volume = volume;
-		audio.play().catch(() => {
-			// ignore audio play errors (e.g., file not found, autoplay policy)
-		});
+		audio.currentTime = 0;
+		// ignore audio play errors (e.g., file not found, autoplay policy)
+		audio.play().catch(() => {});
 		return this;
 	}
 }
