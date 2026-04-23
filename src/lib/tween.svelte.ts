@@ -14,13 +14,6 @@ class Tween<T> {
 	#tween: SvelteTween<T>;
 	#default: T;
 
-	/**
-	 * @deprecated use `.current` instead
-	 */
-	get value() {
-		return this.#tween.current;
-	}
-
 	constructor(value: T, options?: TweenedOptions<T>) {
 		this.#tween = new SvelteTween(value, {
 			duration: 1000,
