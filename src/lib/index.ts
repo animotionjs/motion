@@ -1,3 +1,3 @@
-import { tween, all } from './tween.svelte.js'
+import { tween, all } from './tween.svelte.js';
 
-export { tween, all }
+export { tween, all };

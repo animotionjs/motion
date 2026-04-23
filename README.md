@@ -28,23 +28,23 @@ npm i @animotion/motion
 
 ```svelte
 <script>
-	import { tween } from '@animotion/motion'
+	import { tween } from '@animotion/motion';
 
 	const sfx = {
 		transition: 'sfx/transition.mp3',
 		tally: 'sfx/tally.mp3',
-	}
+	};
 
-	const camera = tween({ x: -2, y: -2, w: 24, h: 24 })
-	const circle = tween({ x: 2.5, y: 2.5, r: 1.5, fill: '#00ffff' })
-	const text = tween({ count: 0, opacity: 0 })
+	const camera = tween({ x: -2, y: -2, w: 24, h: 24 });
+	const circle = tween({ x: 2.5, y: 2.5, r: 1.5, fill: '#00ffff' });
+	const text = tween({ count: 0, opacity: 0 });
 
 	async function animate() {
-		await camera.sfx(sfx.transition).to({ x: 0, y: 0, w: 10, h: 10 })
-		circle.sfx(sfx.transition).to({ x: 10, y: 10, r: 3, fill: '#ffff00' })
-		camera.to({ x: 5, y: 5 })
-		await text.to({ opacity: 1 }, { duration: 300 })
-		text.sfx(sfx.tally).to({ count: 10_000 }, { duration: 600 })
+		await camera.sfx(sfx.transition).to({ x: 0, y: 0, w: 10, h: 10 });
+		circle.sfx(sfx.transition).to({ x: 10, y: 10, r: 3, fill: '#ffff00' });
+		camera.to({ x: 5, y: 5 });
+		await text.to({ opacity: 1 }, { duration: 300 });
+		text.sfx(sfx.tally).to({ count: 10_000 }, { duration: 600 });
 	}
 </script>
 
