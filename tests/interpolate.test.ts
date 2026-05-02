@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { expect, test } from 'vitest';
 import { interpolate } from '$lib/interpolate.js';
 
 test('returns same value for identical inputs', () => {
@@ -44,7 +44,9 @@ test('interpolates color strings', () => {
 
 test('throws on type mismatch', () => {
 	expect(() => interpolate(0, 'hello')).toThrow('Cannot interpolate values of different type');
-	expect(() => interpolate({ x: 1 }, [1, 2])).toThrow('Cannot interpolate values of different type');
+	expect(() => interpolate({ x: 1 }, [1, 2])).toThrow(
+		'Cannot interpolate values of different type'
+	);
 });
 
 test('throws on unsupported types', () => {
