@@ -3,9 +3,24 @@ import { cubicInOut } from 'svelte/easing';
 import { interpolate } from './interpolate.js';
 
 type TweenedOptions<T> = ConstructorParameters<typeof SvelteTween<T>>[1];
+type WithRounded<T> = T extends object ? T & { rounded: T; round(precision?: number): T } : T;
 
 function isObject(value: unknown): value is Record<string, unknown> {
 	return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function roundNumericValues(value: unknown, precision?: number): unknown {
+	if (typeof value === 'number') {
+		return precision != null ? Number(value.toFixed(precision)) : Math.round(value);
+	}
+	if (isObject(value)) {
+		const result: Record<string, unknown> = {};
+		for (const key in value) {
+			result[key] = roundNumericValues(value[key], precision);
+		}
+		return result;
+	}
+	return value;
 }
 
 const sfxCache = new Map<string, HTMLAudioElement>();
@@ -13,10 +28,26 @@ const sfxCache = new Map<string, HTMLAudioElement>();
 class Tween<T> {
 	#tween: SvelteTween<T>;
 	#default: T;
+	#proxy: Record<string, unknown> | null = null;
 
 	/** Get the current animated value. */
-	get current() {
-		return this.#tween.current;
+	get current(): WithRounded<T> {
+		const raw = this.#tween.current;
+		if (isObject(raw)) {
+			if (!this.#proxy) {
+				this.#proxy = new Proxy(raw, {
+					get: (_, p) => {
+						const t = this.#tween.current as Record<string, unknown>;
+						if (typeof p !== 'string') return Reflect.get(t, p);
+						if (p === 'rounded') return roundNumericValues(t);
+						if (p === 'round') return (precision?: number) => roundNumericValues(t, precision);
+						return t[p];
+					},
+				});
+			}
+			return this.#proxy as unknown as WithRounded<T>;
+		}
+		return raw as unknown as WithRounded<T>;
 	}
 
 	/** Get the current target value. */
