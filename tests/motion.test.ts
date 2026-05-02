@@ -7,6 +7,7 @@ import Color from './components/03-color.svelte';
 import MultipleAnimations from './components/04-multiple-animations.svelte';
 import MultipleCombinedAnimations from './components/05-multiple-combined-animations.svelte';
 import AnimationReset from './components/06-animation-reset.svelte';
+import Rounded from './components/07-rounded.svelte';
 
 beforeEach(() => {
 	vi.useFakeTimers();
@@ -89,3 +90,43 @@ test('resets animation to default values', async () => {
 	advanceTimer();
 	await expect.element(outputEl).toHaveTextContent('{"x":0,"y":100,"r":100,"fill":"#00ffff"}');
 });
+
+test('object tweens expose rounded values via current.rounded', async () => {
+	const { getByTestId } = render(Rounded);
+
+	const roundedEl = getByTestId('obj-rounded');
+	await expect.element(roundedEl).toHaveTextContent('{"x":1,"y":6,"label":"hello"}');
+});
+
+test('object tweens expose precision rounding via current.round(n)', async () => {
+	const { getByTestId } = render(Rounded);
+
+	const round1El = getByTestId('obj-round-1');
+	const round2El = getByTestId('obj-round-2');
+
+	await expect.element(round1El).toHaveTextContent('{"x":1.2,"y":5.7,"label":"hello"}');
+	await expect.element(round2El).toHaveTextContent('{"x":1.23,"y":5.68,"label":"hello"}');
+});
+
+test('non-numeric properties pass through unchanged', async () => {
+	const { getByTestId } = render(Rounded);
+
+	const labelEl = getByTestId('obj-label');
+	await expect.element(labelEl).toHaveTextContent('hello');
+});
+
+test('raw properties in current are unrounded', async () => {
+	const { getByTestId } = render(Rounded);
+
+	const xEl = getByTestId('obj-x');
+	await expect.element(xEl).toHaveTextContent('1.234');
+});
+
+test('individual rounded property access via current.rounded.x', async () => {
+	const { getByTestId } = render(Rounded);
+
+	const xRoundedEl = getByTestId('obj-x-rounded');
+	await expect.element(xRoundedEl).toHaveTextContent('1');
+});
+
+
