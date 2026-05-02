@@ -50,19 +50,14 @@ class Tween<T> {
 		return raw as unknown as WithRounded<T>;
 	}
 
-	/** Get the current target value. */
-	get target() {
-		return this.#tween.current;
-	}
-
 	/**
 	 * Animate to a new value using assignment syntax.
 	 * @param v - The target value.
 	 * @example
 	 * count.target = 100;
 	 */
-	set target(v) {
-		this.#tween.set(v);
+	set target(v: T extends object ? Partial<T> : T) {
+		this.#tween.set(v as T);
 	}
 
 	/**
