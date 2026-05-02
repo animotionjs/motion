@@ -12,17 +12,17 @@ Motion is a simple Svelte animation library. Instead of being limited to animati
 npm i @animotion/motion
 ```
 
-## Methods
+## API
 
-- `tween` is the value over time which can be a single value, such as `tween(0)`, or an object `tween({ count: 0 })`
-- `reset` is a helper function to reset the animation to its default values
-
-## Usage
-
-- `to` method is used to animate values
-- `sfx` method is used to play sounds
-- `tween` and `to` method accept an options object for `duration`, `delay`, and `easing`
-- `await` keyword can be used to wait for animations to finish
+- `tween(value, options?)` — create a tween that animates a value over time
+- `.to(value, options?)` — animate to a new value, returns a promise
+- `.current` — the current animated value
+- `.current.rounded` rounds to integers
+- `.current.round(n)` rounds to decimals
+- `.target = value` — set the target value directly
+- `.sfx(sound, options?)` — play a sound effect, returns the tween for chaining
+- `.reset()` — reset to the initial value instantly
+- `all(...tweens)` — wait for multiple tweens to complete
 
 ## Example
 
